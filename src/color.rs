@@ -1,6 +1,9 @@
-#[derive(Default)]
-struct srgb {
-    r: f32,
-    g: f32,
-    b: f32,
+#![allow(dead_code, non_camel_case_types)]
+
+#[repr(C)]
+#[derive(Clone, Copy, Default)]
+pub struct srgb {
+    pub r: f32,
+    pub g: f32,
+    pub b: f32,
 }
