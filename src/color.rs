@@ -34,7 +34,6 @@
 //! let color_rgb = any_color_as_rgb(color_srgb);
 //!
 //! assert_eq!(color_rgb, rgb::from(color_srgb));
-
 //! ```
 
 /// any struct that implements this trait must implement Into for all color structs in this
@@ -127,6 +126,24 @@ pub struct rgb {
     pub b: f32,
 }
 
+impl rgb {
+    fn from_linear(x: f32) -> f32 {
+        if x >= 0.0031308 {
+            (1.055) * x.powf(1.0 / 2.4) - 0.055
+        } else {
+            12.92 * x
+        }
+    }
+
+    fn to_linear(x: f32) -> f32 {
+        if x >= 0.04045 {
+            ((x + 0.055) / (1.0 + 0.055)).powf(2.4)
+        } else {
+            x / 12.92
+        }
+    }
+}
+
 impl Color for rgb {}
 
 impl From<[f32; 3]> for rgb {
@@ -148,9 +165,9 @@ impl From<rgb> for [f32; 3] {
 impl From<rgb> for srgb {
     fn from(value: rgb) -> Self {
         Self {
-            r: to_linear(value.r),
-            g: to_linear(value.g),
-            b: to_linear(value.b),
+            r: rgb::to_linear(value.r),
+            g: rgb::to_linear(value.g),
+            b: rgb::to_linear(value.b),
         }
     }
 }
@@ -158,25 +175,9 @@ impl From<rgb> for srgb {
 impl From<srgb> for rgb {
     fn from(value: srgb) -> Self {
         Self {
-            r: from_linear(value.r),
-            g: from_linear(value.g),
-            b: from_linear(value.b),
+            r: rgb::from_linear(value.r),
+            g: rgb::from_linear(value.g),
+            b: rgb::from_linear(value.b),
         }
-    }
-}
-
-fn from_linear(x: f32) -> f32 {
-    if x >= 0.0031308 {
-        (1.055) * x.powf(1.0 / 2.4) - 0.055
-    } else {
-        12.92 * x
-    }
-}
-
-fn to_linear(x: f32) -> f32 {
-    if x >= 0.04045 {
-        ((x + 0.055) / (1.0 + 0.055)).powf(2.4)
-    } else {
-        x / 12.92
     }
 }
