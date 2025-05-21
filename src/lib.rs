@@ -16,8 +16,7 @@
 //!
 //! # the color trait
 //!
-//! every color struct implements the color trait. the color trait ensures that every thruct that implements it can be cast to all the colors. when writing functions that requre a color, using a generic color allows the caller to store their colors in whatever format thay want.
-//! like.
+//! every color struct implements the color trait. the color trait ensures that every struct that implements it can be cast to all the colors. when writing functions that require a color, using a generic color allows the caller to store their colors in whatever format they want.
 //!
 //! ```
 //! use tinycolors::{Color, srgb, rgb};

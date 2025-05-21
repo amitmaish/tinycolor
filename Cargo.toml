@@ -1,5 +1,11 @@
 [package]
 name = "tinycolors"
+authors = ["amit"]
+description = "a tiny color management library focused on erganomics."
+readme = "readme.md"
+repository = "https://github.com/amitmaish/tinycolors"
+license = "MIT OR Apache-2.0"
+keywords = ["color"]
 version = "0.1.0"
 edition = "2024"
 
